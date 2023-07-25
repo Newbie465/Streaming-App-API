@@ -15,6 +15,7 @@
     "@consumet/extensions": "^1.4.18",
     "@fastify/swagger": "^8.8.0",
     "@fastify/swagger-ui": "^1.9.3",
+    "dotenv": "^16.3.1",
     "fastify": "^4.20.0",
     "ts-node": "^10.9.1"
   },

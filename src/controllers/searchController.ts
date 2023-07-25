@@ -5,7 +5,7 @@ const animeService = new SearchServices
 
 const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
 
-    fastify.get("/", (req : FastifyRequest, rep : FastifyReply) => {
+    fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
         rep.status(200).send({
             message: "Welcome to the world of Anime"
         })
