@@ -30,7 +30,7 @@ export default class Application {
         this.fastify.register(search, {prefix: "/api/v1"})
 
         this.fastify.listen({
-            port: Number(process.env.PORT) || 8081,
+            port: Number(process.env.PORT) || 8080,
             host: process.env.HOST || "0.0.0.0",
         })
     }
