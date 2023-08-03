@@ -5,7 +5,7 @@ const animeService = new SearchServices
 
 const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
 
-    fastify.get("/", (req : FastifyRequest, rep : FastifyReply) => {
+    fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
         rep.status(200).send({
             message: "Welcome to the world of Anime"
         })
@@ -29,7 +29,29 @@ const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
                     default : 1
                 }
             },
-            
+            response : {
+                200: {
+                    type: 'object',
+                    properties : {
+                        currentPage : { type: "number" },
+                        hasNextPage : { type:  "boolean" },
+                        results : {
+                            type : "array",
+                            items : {
+                                type : "object",
+                                properties : {
+                                    id : { type: "string" },
+                                    title : { type: "string" },
+                                    image : { type: "string" },
+                                    releaseDate : { type: "string" },
+                                    dubId : { type: "string" },
+                                    type : { type: "string"},
+                                }
+                            }
+                        }
+                    },
+                }
+            }            
         }
     }, async (req : FastifyRequest, rep : FastifyReply) =>{
         const query = (req.params as {query : string}).query
