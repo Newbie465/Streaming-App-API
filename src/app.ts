@@ -1,8 +1,8 @@
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import search from "./controllers/searchController";
 import { fastifySwagger } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-import * as dotenv from "dotenv";
+import envConnector from "./utils/envConnector";
 
 export default class Application {
 
@@ -10,12 +10,13 @@ export default class Application {
         logger: true
     })
 
-    dotenv = dotenv;
-
-
     constructor() {
-
-        this.dotenv.config()
+            
+        this.initialize()
+            
+    }
+    
+    initialize() {
 
         this.fastify.register(fastifySwagger, {
             swagger: {
@@ -32,15 +33,20 @@ export default class Application {
         this.fastify.register(fastifySwaggerUi, {
             routePrefix : "/swagger/docs"
         })
+
+        
         
         this.fastify.register(search, {prefix: "/api/v1"})
+        
+        this.fastify.register(envConnector).ready(err => {
+            if(err) console.log(err)
 
-        this.fastify.listen({
-            port: Number(process.env.PORT) || 8080,
-            host: process.env.HOST || "0.0.0.0",
+            this.fastify.listen({
+                port: Number(this.fastify.config.PORT) || 8080,
+                host: this.fastify.config.HOST || "localhost",
+            })
+            
         })
 
     }
-
-    
 }

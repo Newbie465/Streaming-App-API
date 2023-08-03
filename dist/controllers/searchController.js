@@ -38,6 +38,29 @@ const routes = (fastify, options) => __awaiter(void 0, void 0, void 0, function*
                     default: 1
                 }
             },
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        currentPage: { type: "number" },
+                        hasNextPage: { type: "boolean" },
+                        results: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    id: { type: "string" },
+                                    title: { type: "string" },
+                                    image: { type: "string" },
+                                    releaseDate: { type: "string" },
+                                    dubId: { type: "string" },
+                                    type: { type: "string" },
+                                }
+                            }
+                        }
+                    },
+                }
+            }
         }
     }, (req, rep) => __awaiter(void 0, void 0, void 0, function* () {
         const query = req.params.query;
