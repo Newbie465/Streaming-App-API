@@ -27,7 +27,7 @@ function oAuth2Middleware(fastify) {
                 auth: oauth2_1.fastifyOauth2.GOOGLE_CONFIGURATION,
             },
             startRedirectPath: '/api/v1/auth/google',
-            callbackUri: 'http://localhost:3000/api/v1/auth/google/callback'
+            callbackUri: `${process.env.URL}/api/v1/auth/google/callback`
         });
         fastify.get("/api/v1/auth/google/callback", {
             schema: {

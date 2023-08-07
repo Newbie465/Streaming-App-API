@@ -1,5 +1,5 @@
 import fastify, { FastifyInstance } from "fastify";
-import search from "./controllers/searchController";
+import search from "./modules/search/search.routes";
 import { fastifySwagger } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { fastifyCors } from "@fastify/cors";

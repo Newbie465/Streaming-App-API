@@ -83,4 +83,4 @@ class SearchServices {
     }
 }
 exports.default = SearchServices;
-//# sourceMappingURL=searchServices.js.map
+//# sourceMappingURL=search.service.js.map

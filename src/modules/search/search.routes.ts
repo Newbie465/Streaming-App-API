@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, RegisterOptions } from "fastify";
-import SearchServices from "../services/searchServices";
+import SearchServices from "./search.service";
 
 const animeService = new SearchServices
 
