@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const searchServices_1 = __importDefault(require("../services/searchServices"));
-const animeService = new searchServices_1.default;
+const search_service_1 = __importDefault(require("./search.service"));
+const animeService = new search_service_1.default;
 const routes = (fastify, options) => __awaiter(void 0, void 0, void 0, function* () {
     fastify.get("/", (req, rep) => __awaiter(void 0, void 0, void 0, function* () {
         rep.status(200).send({
@@ -77,4 +77,4 @@ const routes = (fastify, options) => __awaiter(void 0, void 0, void 0, function*
     }));
 });
 exports.default = routes;
-//# sourceMappingURL=searchController.js.map
+//# sourceMappingURL=search.routes.js.map
