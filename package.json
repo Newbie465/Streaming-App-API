@@ -9,7 +9,7 @@
     "start": "ts-node src/main.ts",
     "build": "rimraf dist && tsc",
     "migrate": "drizzle-kit generate:pg --out migrations-folder --schema src/db/schema.ts",
-    "vercel-build" : "echo"
+    "vercel-build" : "echo hello"
   },
   "keywords": [],
   "author": "",
