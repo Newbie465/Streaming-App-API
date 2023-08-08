@@ -1,6 +1,6 @@
 {
   "name": "streaming-platform",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "src/main.ts",
   "scripts": {
@@ -8,8 +8,8 @@
     "dev": "nodemon src/main.ts",
     "start": "ts-node src/main.ts",
     "build": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist"
+    "migrate": "drizzle-kit generate:pg --out migrations-folder --schema src/db/schema.ts",
+    "vercel-build" : "echo"
   },
   "keywords": [],
   "author": "",
@@ -22,19 +22,19 @@
     "@fastify/swagger": "^8.8.0",
     "@fastify/swagger-ui": "^1.9.3",
     "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.28.1",
     "fastify": "^4.20.0",
     "fastify-plugin": "^4.5.1",
+    "pg": "^8.11.2",
+    "pg-pool": "^3.6.1",
     "pre-commit": "^1.2.2",
     "rimraf": "^5.0.1",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.4",
+    "@types/pg": "^8.10.2",
+    "drizzle-kit": "^0.19.12",
     "typescript": "^5.1.6"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ]
+  }
 }

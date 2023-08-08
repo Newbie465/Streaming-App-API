@@ -5,13 +5,7 @@ const animeService = new SearchServices
 
 const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
 
-    fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
-        rep.status(200).send({
-            message: "Welcome to the world of Anime"
-        })
-    })
-
-    fastify.get("/search/:query", {
+    fastify.get("/:query", {
         schema : {
             description : "Search Anything",
             tags : ["Search"],

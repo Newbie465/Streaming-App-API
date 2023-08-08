@@ -1,4 +1,4 @@
-import fastify, { FastifyInstance } from "fastify";
+import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import search from "./modules/search/search.routes";
 import { fastifySwagger } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
@@ -39,7 +39,13 @@ export default class Application {
             routePrefix : "/swagger/docs"
         })
 
-        this.fastify.register(search, {prefix: "/api/v1"})
+        this.fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
+            rep.status(200).send({
+                message: "Welcome to the The Streaming Platform"
+            })
+        })
+    
+        this.fastify.register(search, {prefix: "/api/v1/search"})
 
         this.fastify.register(fastifyCors, {
             origin: "*",
