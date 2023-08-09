@@ -1,6 +1,6 @@
 import Application from "./app";
 
-function main() {
+export default function main() {
 
     new Application();
 
