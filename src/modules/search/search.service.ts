@@ -1,5 +1,5 @@
 import { ANIME, MOVIES } from "@consumet/extensions";
-import { SearchData, SearchObject, SearchResponse } from "../models/searchModels";
+import { SearchData, SearchObject, SearchResponse } from "./search.views";
 
 export default class SearchServices {
 

@@ -1,8 +1,12 @@
-import fastify, { FastifyInstance } from "fastify";
-import search from "./controllers/searchController";
+import fastify, { FastifyReply, FastifyRequest } from "fastify";
+import search from "./modules/search/search.routes";
 import { fastifySwagger } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-import envConnector from "./utils/envConnector";
+import { fastifyCors } from "@fastify/cors";
+import oAuthMiddleware from "./utils/oAuthMiddleware";
+import { configDotenv } from "dotenv";
+
+configDotenv();
 
 export default class Application {
 
@@ -26,6 +30,7 @@ export default class Application {
                 },
                 tags: [
                     { name: 'Search', description: 'All Search EndPoints' },
+                    { name : 'Authentication', description: 'All Authentication EndPoints'}
                 ]
             }
         });
@@ -34,19 +39,24 @@ export default class Application {
             routePrefix : "/swagger/docs"
         })
 
-        
-        
-        this.fastify.register(search, {prefix: "/api/v1"})
-        
-        this.fastify.register(envConnector).ready(err => {
-            if(err) console.log(err)
-
-            this.fastify.listen({
-                port: Number(this.fastify.config.PORT) || 8080,
-                host: this.fastify.config.HOST || "localhost",
+        this.fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
+            rep.status(200).send({
+                message: "Welcome to the The Streaming Platform"
             })
-            
         })
+    
+        this.fastify.register(search, {prefix: "/api/v1/search"})
 
+        this.fastify.register(fastifyCors, {
+            origin: "*",
+        })
+        
+        this.fastify.register(oAuthMiddleware)
+        
+        this.fastify.listen({
+            port: Number(process.env.PORT) || 3000,
+            host: process.env.HOST || "localhost",
+        })
+            
     }
 }
