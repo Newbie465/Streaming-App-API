@@ -30,7 +30,7 @@ declare module "@fastify/jwt" {
 export default class Application {
 
     fastify = fastify({
-        logger,
+        logger: process.env.ENV === "development" ? logger : true,
     })
 
     constructor() {
