@@ -6,7 +6,6 @@ import { fastifyCors } from "@fastify/cors";
 import oAuthMiddleware from "./utils/oAuthMiddleware";
 import { configDotenv } from "dotenv";
 import {migrate} from "drizzle-orm/node-postgres/migrator"
-import {logger} from "./utils/logger"
 import { db } from "./db";
 import { env } from "process";
 import { usersRoutes } from "./modules/users/user.route";
@@ -30,7 +29,7 @@ declare module "@fastify/jwt" {
 export default class Application {
 
     fastify = fastify({
-        logger: process.env.ENV === "development" ? logger : true,
+        logger: true,
     })
 
     constructor() {
