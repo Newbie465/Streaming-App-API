@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateUserBody, LoginUserBody } from "./users.schema";
 import { createUser, getUserFromEmail, validatePassword } from "./users.service";
-import { logger } from "../../utils/logger";
 
 export async function createUserHandler(
     request: FastifyRequest<{
@@ -30,7 +29,6 @@ export async function createUserHandler(
     }catch (err) {
 
         reply.status(500).send(err)
-        logger.error(err)
 
     }
 

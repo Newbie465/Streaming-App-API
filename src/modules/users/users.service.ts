@@ -1,8 +1,7 @@
 import { InferModel, eq } from "drizzle-orm";
 import { users } from "../../db/schema";
 import { db } from "../../db";
-import { compare, compareSync, hashSync } from "bcryptjs";
-import { logger } from "../../utils/logger";
+import { compareSync, hashSync } from "bcryptjs";
 
 export async function createUser(data: InferModel<typeof users, "insert">) {
 
