@@ -82,9 +82,9 @@ export default class Application {
             host: process.env.HOST || "localhost",
         })
 
-        // await migrate(db, {
-        //     migrationsFolder : "./migrations-folder"
-        // })
+        await migrate(db, {
+            migrationsFolder : "./migrations-folder"
+        }).catch(error => console.log(error))
             
     }
 }
