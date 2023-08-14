@@ -24,3 +24,4 @@ export type SearchResponse = {
     season?: string,
     type?: string
 }
+
