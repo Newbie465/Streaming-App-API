@@ -12,8 +12,6 @@ import { usersRoutes } from "./modules/users/user.route";
 import { fastifyJwt } from "@fastify/jwt";
 
 configDotenv();
-
-
 declare module "@fastify/jwt" {
     interface FastifyJWT {
       payload: { 

@@ -17,7 +17,7 @@ const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
                     }
                 },
             },
-            querystring : {
+            querystring: {
                 page : {
                     type: "number" , 
                     default : 1
