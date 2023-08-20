@@ -14,21 +14,32 @@ export async function createUserHandler(
     try {
 
         const user = await createUser(data)
-        const token = await reply.jwtSign({
+        const accessToken = await reply.accessTokenSign({
             id : user.id,
             email : user.email,
+        }, {
+            expiresIn : "1m",
+        })
+
+        const refreshToken = await reply.refreshTokenSign({
+            id : user.id,
+            email : user.email,
+        }, {
+            expiresIn : "30d",
         })
 
         reply.status(200).send(
             {
                 ...user,
-                token
+                accessToken,
+                refreshToken,
+
             }
         );
 
     }catch (err) {
 
-        reply.status(500).send(err)
+        reply.status(400).send(err)
 
     }
 
@@ -52,35 +63,43 @@ export async function loginHandler(
             if(!user) {
 
                 reply.status(404).send({
-                    error : "This Email does not exist"
+                    error : "User Not Registered",
                 })
 
             }
             else if (!validatePassword(password, user.password)){
 
-                reply.status(402).send({
-                    error : "Password is incorrect"
+                reply.status(401).send({
+                    error : "Username/Password is incorrect"
                 })
 
             }
             else{    
 
-                const token = await reply.jwtSign({
+                const accessToken = await reply.accessTokenSign({
                     id : user.id,
                     email : email
+                }, {
+                    expiresIn : "1m",
+                })
+
+                const refreshToken = await reply.refreshTokenSign({
+                    id : user.id,
+                    email : user.email,
+                }, {
+                    expiresIn : "30d",
                 })
 
                 reply.status(200).send({
-                    token : token,
+                    accessToken,
+                    refreshToken
                 })
                 
             }
             
         }catch(err) {
 
-            reply.status(500).send({
-                error : "Internal Server Error"
-            })
+            reply.status(500).send(err)
 
         }
 

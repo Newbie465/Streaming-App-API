@@ -46,7 +46,9 @@ const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
                     },
                 }
             }            
-        }
+        },
+        onRequest : fastify.authenticate
+
     }, async (req : FastifyRequest, rep : FastifyReply) =>{
         const query = (req.params as {query : string}).query
         const page = (req.query as { page: number }).page || 1;

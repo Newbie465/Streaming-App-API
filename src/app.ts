@@ -10,6 +10,7 @@ import { db } from "./db";
 import { env } from "process";
 import { usersRoutes } from "./modules/users/user.route";
 import { fastifyJwt } from "@fastify/jwt";
+import jwtHelperMiddleware from "./utils/jwtHelperMiddleware";
 
 configDotenv();
 declare module "@fastify/jwt" {
@@ -56,24 +57,23 @@ export default class Application {
             routePrefix : "/swagger/docs"
         })
 
-        this.fastify.register(fastifyJwt, {
-            secret : process.env.JWTSECRET as string,
-        })
-
-        this.fastify.get("/", async (req : FastifyRequest, rep : FastifyReply) => {
-            rep.status(200).send({
-                message: "Welcome to the The Streaming Platform"
-            })
-        })
-    
-        this.fastify.register(search, {prefix: "/api/v1/search"})
-        this.fastify.register(usersRoutes, {prefix: "api/v1/users"})
-
+        
+        
         this.fastify.register(fastifyCors, {
             origin: "*",
         })
         
         this.fastify.register(oAuthMiddleware)
+        this.fastify.register(jwtHelperMiddleware)
+        
+        this.fastify.get("/" ,async (req : FastifyRequest, rep : FastifyReply) => {
+            rep.status(200).send({
+                message: "Welcome to the The Streaming Platform"
+            })
+        })
+
+        this.fastify.register(search, {prefix: "/api/v1/search"})
+        this.fastify.register(usersRoutes, {prefix: "api/v1/users"})
         
         await this.fastify.listen({
             port: Number(process.env.PORT) || 3000,
