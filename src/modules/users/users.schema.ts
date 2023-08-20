@@ -9,9 +9,9 @@ const createUserBodySchema = z.object({
 
 const userResponseSchema = z.object({
     id: z.string().uuid(),
-    name: z.string(),
     email : z.string().email(),
-    token : z.string(),
+    accessToken : z.string(),
+    refreshToken : z.string()
 })
 
 const loginUserBodySchema = z.object({
@@ -20,7 +20,8 @@ const loginUserBodySchema = z.object({
 })
 
 const loginResponseSchema = z.object({
-    token : z.string(),
+    accessToken : z.string(),
+    refreshToken : z.string(),
 })
 
 export type CreateUserBody = z.infer<typeof createUserBodySchema>
