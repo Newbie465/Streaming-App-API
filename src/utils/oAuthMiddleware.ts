@@ -11,13 +11,13 @@ declare module 'fastify' {
 
 async function oAuth2Middleware(fastify: FastifyInstance){
     
-    fastify.register(fastifyOauth2,{
+    fastify.register(fastifyOauth2, {
         name: "googleOAuth2",
         scope: ['profile email'], 
         credentials: {
             client: {
-                id: process.env.GOOGLE_OAUTH_CLIENT_ID,
-                secret: process.env.GOOGLE_OAUTH_CLIENT_SECRET
+                id: process.env.GOOGLE_OAUTH_CLIENT_ID as string,
+                secret: process.env.GOOGLE_OAUTH_CLIENT_SECRET as string,
             },
 
             auth: fastifyOauth2.GOOGLE_CONFIGURATION, 
