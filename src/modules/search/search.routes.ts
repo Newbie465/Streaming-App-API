@@ -45,7 +45,12 @@ const routes = async (fastify : FastifyInstance, options: RegisterOptions) => {
                         }
                     },
                 }
-            }            
+            },
+            security : [
+                {
+                    bearerAuth : []
+                }
+            ]           
         },
         onRequest : fastify.authenticate
 

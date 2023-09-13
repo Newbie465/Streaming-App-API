@@ -8,7 +8,7 @@ declare module 'fastify' {
     }
     interface FastifyRequest {
         accessTokenVerify : () => Promise<fastifyJwt.VerifyPayloadType>
-        refreshTokenVerify : () => Promise<fastifyJwt.VerifyPayloadType>
+        refreshTokenVerify : (options?: Partial<fastifyJwt.VerifyOptions>) => Promise<fastifyJwt.VerifyPayloadType>
     }
     interface FastifyReply {
         accessTokenSign : (payload: {
@@ -39,6 +39,10 @@ async function jwtHelperMiddleware(fastify: FastifyInstance) {
         namespace : 'refreshToken',
         jwtVerify : 'refreshTokenVerify',
         jwtSign : 'refreshTokenSign',
+        cookie : {
+            cookieName : 'refreshToken',
+            signed : false
+        }
 
     })
 
