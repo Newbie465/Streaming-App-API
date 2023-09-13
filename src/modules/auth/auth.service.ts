@@ -2,6 +2,7 @@ import { InferModel, eq } from "drizzle-orm";
 import { users } from "../../db/schema";
 import { db } from "../../db";
 import { compareSync, hashSync } from "bcryptjs";
+import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function createUser(data: InferModel<typeof users, "insert">) {
 
@@ -50,4 +51,46 @@ export function validatePassword(password: string, hashedPassword: string){
     return compareSync(password, hashedPassword)
 
 }
+
+export async function signAccessToken(id : string, email: string, reply: FastifyReply) {
+
+    const accessToken = await reply.accessTokenSign({
+        id : id,
+        email : email
+    }, {
+        expiresIn : "15m",
+    })
+
+    return accessToken
+
+}
+
+export async function signRefreshToken(id : string, email: string, reply: FastifyReply) {
+
+    const refreshToken = await reply.refreshTokenSign({
+        id : id,
+        email : email
+    }, {
+        expiresIn : "30d",
+    })
+
+    return refreshToken
+
+}
+
+export async function verifyRefreshToken(request : FastifyRequest){
+
+    try {
+        
+        
+        const result = await request.refreshTokenVerify({onlyCookie: true})
+        return result
+
+
+    } catch (error) {
+        console.error(error)
+    }
+
+}
+
 

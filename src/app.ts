@@ -8,9 +8,10 @@ import { configDotenv } from "dotenv";
 import {migrate} from "drizzle-orm/node-postgres/migrator"
 import { db } from "./db";
 import { env } from "process";
-import { usersRoutes } from "./modules/users/user.route";
+import { usersRoutes } from "./modules/auth/auth.route";
 import { fastifyJwt } from "@fastify/jwt";
 import jwtHelperMiddleware from "./utils/jwtHelperMiddleware";
+import { fastifyCookie } from "@fastify/cookie";
 
 configDotenv();
 declare module "@fastify/jwt" {
@@ -41,23 +42,31 @@ export default class Application {
 
         this.fastify.register(fastifySwagger, {
             swagger: {
-                info : {
-                    title : "Streaming Platform",
-                    version : "0.0.1"
-                },
-                tags: [
-                    { name: 'Search', description: 'All Search EndPoints' },
-                    { name : 'Authentication', description: 'All Authentication EndPoints'},
-                    { name : 'Users', description: "All Users EndPoints"}
-                ]
+                    info : {
+                        title : "Streaming Platform",
+                        version : "0.0.1"
+                    },
+                    tags: [
+                        { name: 'Search', description: 'All Search EndPoints' },
+                        { name : 'Authentication', description: 'All Authentication EndPoints'},
+                    ],
+                    securityDefinitions : {
+                        bearerAuth : {
+                            type: 'apiKey',
+                            name: 'Authorization',
+                            in : 'header'
+                        }
+                    }
+                }
             }
-        });
+        );
+
+        this.fastify.register(fastifyCookie)
 
         this.fastify.register(fastifySwaggerUi, {
             routePrefix : "/swagger/docs"
         })
 
-        
         
         this.fastify.register(fastifyCors, {
             origin: "*",
@@ -73,11 +82,11 @@ export default class Application {
         })
 
         this.fastify.register(search, {prefix: "/api/v1/search"})
-        this.fastify.register(usersRoutes, {prefix: "api/v1/users"})
+        this.fastify.register(usersRoutes, {prefix: "api/v1/auth"})
         
         await this.fastify.listen({
-            port: Number(process.env.PORT) || 3000,
-            host: process.env.HOST || "localhost",
+            port: Number(process.env.PORT),
+            host: process.env.HOST,
         })
 
         await migrate(db, {
