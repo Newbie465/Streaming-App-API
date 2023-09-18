@@ -1,0 +1,104 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:131167155626:task-definition/streaming-api:2",
+    "containerDefinitions": [
+        {
+            "name": "streaming-api",
+            "image": "131167155626.dkr.ecr.us-east-1.amazonaws.com/streaming-api",
+            "cpu": 256,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "GOOGLE_OAUTH_CLIENT_ID",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/GOOGLE_OAUTH_CLIENT_ID"
+                },
+                {
+                    "name": "GOOGLE_OAUTH_CLIENT_SECRET",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/GOOGLE_OAUTH_CLIENT_SECRET"
+                },
+                {
+                    "name": "DATABASE_CONNECTION",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/DATABASE_CONNECTION"
+                },
+                {
+                    "name": "ACCESSTOKENSECRET",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/ACCESSTOKENSECRET"
+                },
+                {
+                    "name": "REFRESHTOKENSECRET",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/REFRESHTOKENSECRET"
+                },
+                {
+                    "name": "PORT",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/PORT"
+                },
+                {
+                    "name": "HOST",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/HOST"
+                },
+                {
+                    "name": "URL",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/URL"
+                },
+                {
+                    "name": "ENV",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/ENV"
+                },
+                {
+                    "name": "SECRET",
+                    "valueFrom": "arn:aws:ssm:us-east-1:131167155626:parameter/SECRET"
+                }
+            ]
+        }
+    ],
+    "family": "streaming-api",
+    "taskRoleArn": "arn:aws:iam::131167155626:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::131167155626:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 2,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "ecs.capability.secrets.ssm.environment-variables"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "registeredAt": "2023-09-18T12:27:07.324Z",
+    "registeredBy": "arn:aws:iam::131167155626:user/terraform",
+    "tags": []
+}
